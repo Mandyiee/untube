@@ -52,11 +52,10 @@ def index():
       
       audio.write_audiofile(audioFolder)
       urls = audioFolder
-  return render_template('index.html'urls=urls,thumbnail_url=thumbnail_url,thumbnail_title=thumbnail_title)
+  return render_template('index.html',urls=urls,thumbnail_url=thumbnail_url,thumbnail_title=thumbnail_title)
 
 @app.route('/download')
-def downloadFile ():
-  #For windows you need to use drive name [ex: F:/Example.pdf] 
+def downloadFile():
   path = request.args.get('path') 
   return send_file(path, as_attachment=True) 
 
