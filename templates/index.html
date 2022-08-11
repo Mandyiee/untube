@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{url_for('static', filename = 'style.css')}}" rel="stylesheet"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title></title>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-dark">
+       <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+             <img src="https://see.fontimg.com/api/renderfont4/1G8Y2/eyJyIjoiZnMiLCJoIjoxNjksInciOjE4NzUsImZzIjo5MCwiZmdjIjoiI0ZGRkZGRiIsImJnYyI6IiNGRkZGRkYiLCJ0IjoxfQ/VW5UdWJl/hellosty-blast.png" alt="" width="90" height="34" class="d-inline-block align-text-top">
+             </a> 
+             </div>
+             </nav>
+     
+      
+<div class="card mx-auto my-5" style="width: min(85vw, 600px);">
+  
+  <div class="card-body">
+    <form class="row g-3 first-form" action="/" method="POST" accept-charset="utf-8">
+      <label for="url"> Youtube Url:</label>
+        <input type="text" class="form-control" name="url" id="url" value="" required="True"/>
+<select class="form-select" name="option" aria-label="Default select example">
+  <option selected value="mp4">Mp4</option>
+  <option value="mp3">Mp3</option>
+  
+</select>
+    <button type="submit" class="first-button btn btn-dark">Download</button>
+    </form>
+  </div>
+  
+  
+</div>
+
+
+  {% if thumbnail_url != None and urls != None %}
+  <div class="card mx-auto my-5" style="width: min(85vw, 600px);">
+  <div class="card-body row g-3">
+    <h4 class="card-title text-center">Download</h4>
+    <p class="card-text text-mute text-center">{{thumbnail_title}}</p>
+    <img src="{{thumbnail_url}}" alt="" />
+     <button class="btn btn-dark"> <a class="" href="/download?path={{urls}}" >Download</a> </button>
+  </div>
+  </div>
+  
+  {% endif %}
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> 
+   <script type="text/javascript" charset="utf-8">
+     let mainButton = document.querySelector('.first-button')
+     let mainForm = document.querySelector('.first-form')
+     mainForm.addEventListener('submit', () => {
+       mainButton.innerHTML = `<div class="spinner-border text-light" role="status"> <span class="visually-hidden">Loading...</span> </div>`
+       
+     })
+   </script>
+  </body>
+</html>
