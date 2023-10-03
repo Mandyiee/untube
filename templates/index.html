@@ -4,9 +4,13 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{url_for('static', filename = 'style.css')}}" rel="stylesheet"> 
+    <link href="{{url_for('static', filename='style.css')}}" rel="stylesheet"> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title></title>
+    <meta content="https://see.fontimg.com/api/renderfont4/8MVEg/eyJyIjoiZnMiLCJoIjo5OCwidyI6MTUwMCwiZnMiOjY1LCJmZ2MiOiIjMjEyMDIwIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/VQ/pumpkin-type-halloween.png" property="og:image" />
+    <meta content="https://see.fontimg.com/api/renderfont4/8MVEg/eyJyIjoiZnMiLCJoIjo5OCwidyI6MTUwMCwiZnMiOjY1LCJmZ2MiOiIjMjEyMDIwIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/VQ/pumpkin-type-halloween.png" property="og:image:secure_url" />
+    <link href="https://see.fontimg.com/api/renderfont4/8MVEg/eyJyIjoiZnMiLCJoIjo5OCwidyI6MTUwMCwiZnMiOjY1LCJmZ2MiOiIjMjEyMDIwIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/VQ/pumpkin-type-halloween.png" rel="shortcut icon" type="image/png" />
+
+    <title>Untubes</title>
   </head>
   <body>
     <nav class="navbar navbar-dark bg-dark">
@@ -17,19 +21,44 @@
              </div>
              </nav>
      
-      
+             {% for message in get_flashed_messages() %}
+             <div class="alert alert-info alert-dismissible fade show" role="alert">
+           {{message}}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+             {% endfor %}
 <div class="card mx-auto my-5" style="width: min(85vw, 600px);">
   
   <div class="card-body">
+ 
     <form class="row g-3 first-form" action="/" method="POST" accept-charset="utf-8">
-      <label for="url"> Youtube Url:</label>
-        <input type="text" class="form-control" name="url" id="url" value="" required="True"/>
-<select class="form-select" name="option" aria-label="Default select example">
-  <option selected value="mp4">Mp4</option>
-  <option value="mp3">Mp3</option>
-  
-</select>
+      {{ form.hidden_tag() }}
+      
+        <div>
+          {{ form.url.label }}
+          {{ form.url(class="form-control") }}
+          {% if form.url.errors %}
+          <ul class="errors">
+              {% for error in form.url.errors %}
+                  <li><small>{{error}}</small></li>
+              {% endfor %}
+          </ul>
+      {% endif %}
+           </div>
+        
+        <div>
+          {{ form.opt(class="form-control") }}
+          {% if form.opt.errors %}
+          <ul class="errors">
+              {% for error in form.opt.errors %}
+                  <li><small>{{error}}</small></li>
+              {% endfor %}
+          </ul>
+      {% endif %}
+           </div>
+           {% if thumbnail_url != None and thumbnail_title != None %}
     <button type="submit" class="first-button btn btn-dark">Download</button>
+    {% endif %}
     </form>
   </div>
   
@@ -37,13 +66,14 @@
 </div>
 
 
-  {% if thumbnail_url != None and urls != None %}
+  {% if thumbnail_url != None and thumbnail_title != None %}
   <div class="card mx-auto my-5" style="width: min(85vw, 600px);">
   <div class="card-body row g-3">
     <h4 class="card-title text-center">Download</h4>
     <p class="card-text text-mute text-center">{{thumbnail_title}}</p>
     <img src="{{thumbnail_url}}" alt="" />
-     <button class="btn btn-dark"> <a class="" href="/download?path={{urls}}" >Download</a> </button>
+    
+     <button class="btn btn-dark download-button"> <a class="" href="/download?url={{url}}&opt={{opt}}" style="color:white;text-decoration: none;">Download</a> </button>
   </div>
   </div>
   
@@ -55,6 +85,11 @@
      let mainForm = document.querySelector('.first-form')
      mainForm.addEventListener('submit', () => {
        mainButton.innerHTML = `<div class="spinner-border text-light" role="status"> <span class="visually-hidden">Loading...</span> </div>`
+       
+     })
+     let dbutton = document.querySelector('.download-button')
+     dbutton.addEventListener('click', () => {
+      dbutton.innerHTML = `<div class="spinner-border text-light" role="status"> <span class="visually-hidden">Loading...</span> </div>`
        
      })
    </script>
